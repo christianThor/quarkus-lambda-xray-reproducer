@@ -21,6 +21,7 @@ of this lambda with xray. This was most convenient for me to use in order to cob
 but I can try to set it up and test with SAM local if needed.
 
 ## Things we haven't tested...
+ * [Automatic AWS SDK client tracing using the instrumentor dependency](https://aws.amazon.com/blogs/developer/x-ray-support-for-the-aws-sdk-for-java-v2/). Checkout `CDIConfig.java` to see how the tracing interceptor is set up in the S3 client.
  
  * [Creating custom subsegments](https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-java-subsegments.html)
  
