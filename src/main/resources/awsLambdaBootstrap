@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "helloworld"
+./runner -Djava.io.tmpdir=/tmp -Djava.library.path=./ -Djavax.net.ssl.trustStore=./cacerts

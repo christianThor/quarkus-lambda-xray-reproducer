@@ -7,11 +7,29 @@
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <files>
-      <file>
-	<source>${project.build.directory}${file.separator}${artifactId}-${version}-runner</source>
-	<outputDirectory>/</outputDirectory>
-	<destName>bootstrap</destName>
-	<fileMode>755</fileMode>
-      </file>
+        <file>
+            <source>${project.build.directory}${file.separator}${artifactId}-${version}-runner</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>runner</destName>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>${project.build.directory}${file.separator}classes${file.separator}awsLambdaBootstrap</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>bootstrap</destName>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>${project.build.directory}${file.separator}classes${file.separator}libsunec.so</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>libsunec.so</destName>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>${project.build.directory}${file.separator}classes${file.separator}cacerts</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>cacerts</destName>
+            <fileMode>755</fileMode>
+        </file>
     </files>
 </assembly>

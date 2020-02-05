@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  AdapterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: target/function.zip
+      Handler: not.used.in.provided.runtimei
+      Runtime: provided
+      Tracing: Active
+      Timeout: 30
+      MemorySize: 256
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          DISABLE_SIGNAL_HANDLERS: true
+          TEST_S3_BUCKET: !Ref S3BucketForTesting
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: TempWriteToS3
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:GetObject'
+                  - 's3:PutObject'
+                  - 's3:PutObjectAcl'
+                Resource:
+                  - !Join ["", ['arn:aws:s3:::', !Ref S3BucketForTesting, "/*"]]
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        - "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
+
+  S3BucketForTesting:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+
